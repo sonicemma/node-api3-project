@@ -91,6 +91,7 @@ function validateUserId(req, res, next) {
 
 function validateUser(req, res, next) {
   const body = req.body;
+
   !body || body === {}
 
   ? res.status(400).json({message: 'error with user'})
@@ -100,7 +101,13 @@ function validateUser(req, res, next) {
 }
 
 function validatePost(req, res, next) {
-  // do your magic!
+  const body = req.body
+  
+  !body || body === {}
+  ? res.status(400).json({message: 'error with post' })
+  : !body.text
+  ? res.status(400).json({message: 'error with text'})
+  :next();
 }
 
 module.exports = router;
