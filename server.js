@@ -21,6 +21,7 @@ function logger(req, res, next) {
 
 
   console.log(`${method}, ${endpoint}`);
+  next();
 }
 
 module.exports = server;
