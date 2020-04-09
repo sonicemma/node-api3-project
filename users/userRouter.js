@@ -49,12 +49,25 @@ router.get('/:id/posts', validateUserId, (req, res) => {
   })
 });
 
-router.delete('/:id', (req, res) => {
-  // do your magic!
+router.delete('/:id', validateUserId, validateUser, (req, res) => {
+  db.remove(req.params.id)
+  .then(user => {
+    res.status(200).json(user)
+  })
+  .catch(err => {
+    console.log(err.message, err);
+    res.status(500).json({message: 'error'})
+  })
 });
 
-router.put('/:id', (req, res) => {
-  // do your magic!
+router.put('/:id', validateUser, validateUserId, (req, res) => {
+  db.update(req.params.id, req.body)
+  .then(
+    res.status(200).json(req.body))
+  .catch(err => {
+    console.log(err.message, err);
+    res.status(500).json({message: 'error'})
+  })
 });
 
 //custom middleware
