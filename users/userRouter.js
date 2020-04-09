@@ -73,11 +73,30 @@ router.put('/:id', validateUser, validateUserId, (req, res) => {
 //custom middleware
 
 function validateUserId(req, res, next) {
-  // do your magic!
+  const {id} = req.params;
+  db.getById(id)
+  .then(u => {
+    if (u) {
+      req.u = u;
+      next();
+    } else {
+      res.status(404).json({message: 'error 404'})
+    }
+  })
+  .catch(err => {
+    console.log(err, err.message);
+    res.status(500).json({message: 'error'})
+  })
 }
 
 function validateUser(req, res, next) {
-  // do your magic!
+  const body = req.body;
+  !body || body === {}
+
+  ? res.status(400).json({message: 'error with user'})
+  : !body.name
+  ? res.status(400).json({message: 'error with name'})
+  : next();
 }
 
 function validatePost(req, res, next) {
