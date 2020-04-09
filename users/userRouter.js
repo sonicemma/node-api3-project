@@ -43,6 +43,10 @@ router.get('/:id/posts', validateUserId, (req, res) => {
       res.status(404).json({message: 'error post not found'})
     }
   })
+  .catch(err => {
+    console.log(err.message, err);
+    res.status(500).json({message: 'error'})
+  })
 });
 
 router.delete('/:id', (req, res) => {
